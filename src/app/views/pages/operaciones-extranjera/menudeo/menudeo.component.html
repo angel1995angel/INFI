@@ -1,0 +1,102 @@
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/operaciones">Operaciones-Extranjera</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Menudeo</li>
+  </ol>
+</nav>
+
+<div class="d-flex justify-content-center">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title text-center">Formulario</h6>
+        <form [formGroup]="menudeoForm" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="mb-3">
+                <label for="cedula" class="form-label">Cedula</label>
+                <input type="text" formControlName="cedula" class="form-control" id="cedula" autocomplete="off" placeholder="Cedula">
+                <div *ngIf="f.cedula.touched && f.cedula.invalid" class="text-danger">
+                  <div *ngIf="f.cedula.errors?.required">La cédula es requerida.</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="mb-3">
+                <label for="fecha" class="form-label">Fecha</label>
+                <input type="text" formControlName="fecha" class="form-control" id="fecha" autocomplete="off" placeholder="Fecha">
+                <div *ngIf="f.fecha.touched && f.fecha.invalid" class="text-danger">
+                  <div *ngIf="f.fecha.errors?.required">La fecha es requerida.</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="mb-3">
+                <label class="form-label">Estatus</label>
+                <select formControlName="estatus" class="form-select mb-3">
+                  <option value="1">Todas</option>
+                  <option value="2">Enviadas</option>
+                  <option value="3">Rechazadas</option>
+                  <option value="4">Por enviar</option>
+                </select>
+                <div *ngIf="f.estatus.touched && f.estatus.invalid" class="text-danger">
+                  <div *ngIf="f.estatus.errors?.required">El estatus es requerido.</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-2 d-flex align-items-end">
+              <button type="submit" class="btn btn-primary mb-3">Buscar</button>
+            </div>
+            <div class="col-sm-1 d-flex align-items-end justify-content-center">
+              <i data-feather="more-vertical" appFeatherIcon></i>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="d-flex justify-content-center" *ngIf="operaciones.length > 0">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title text-center">Data Table</h6>
+        <div class="table-responsive">
+          <table id="dataTableExample" class="table">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Cedula</th>
+                <th>Nombre</th>
+                <th>Monto</th>
+                <th>Tasa</th>
+                <th>Estatus</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let oper of operaciones">
+                <td>{{ oper.id }}</td>
+                <td>{{ oper.cedula }}</td>
+                <td>{{ oper.nombre }}</td>
+                <td>{{ oper.montoAComprar }}</td>
+                <td>{{ oper.tasaCambio }}</td>
+                <td>{{ oper.estatusNotificacion }}</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
