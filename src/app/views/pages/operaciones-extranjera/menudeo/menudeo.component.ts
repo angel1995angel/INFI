@@ -1,14 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import * as feather from 'feather-icons';
+import { DataTable } from 'simple-datatables';
 
 @Component({
   selector: 'app-menudeo',
   templateUrl: './menudeo.component.html',
   styleUrls: ['./menudeo.component.scss'],
 })
-export class MenudeoComponent implements OnInit {
+export class MenudeoComponent implements OnInit, AfterViewInit {
   menudeoForm: FormGroup;
   operaciones: any[] = [];
+  page = 1;
+  dropdownOpen = false;
+  dataTable: DataTable;
 
   constructor(private formBuilder: FormBuilder) {}
 
@@ -18,6 +23,25 @@ export class MenudeoComponent implements OnInit {
       fecha: ['', Validators.required],
       estatus: ['', Validators.required],
     });
+
+    this.operaciones = Array.from({ length: 50 }, (_, i) => ({
+      id: i + 1,
+      cedula: `12345678${i}`,
+      nombre: `Nombre ${i}`,
+      montoAComprar: Math.floor(Math.random() * 1000),
+      tasaCambio: Math.random() * 20,
+      estatusNotificacion: ['Enviada', 'Rechazada', 'Por enviar'][i % 3],
+    }));
+  }
+
+  ngAfterViewInit(): void {
+    feather.replace();
+    this.initializeDataTable();
+  }
+
+  initializeDataTable() {
+    const table: any = document.querySelector('#dataTableExample');
+    this.dataTable = new DataTable(table);
   }
 
   get f() {
@@ -26,22 +50,52 @@ export class MenudeoComponent implements OnInit {
 
   onSubmit() {
     if (this.menudeoForm.invalid) {
-      // Marcar todos los controles como "tocados" para mostrar los mensajes de error
       this.menudeoForm.markAllAsTouched();
       return;
     }
 
-    // Simular la búsqueda de operaciones
-    this.operaciones = [
-      {
-        id: 1,
-        cedula: '12345678',
-        nombre: 'Juan Perez',
-        montoAComprar: 1000,
-        tasaCambio: 20,
-        estatusNotificacion: 'Enviada',
-      },
-      // Agrega más datos de ejemplo según sea necesario
-    ];
+    this.operaciones = Array.from({ length: 50 }, (_, i) => ({
+      id: i + 1,
+      cedula: `12345678${i}`,
+      nombre: `Nombre ${i}`,
+      montoAComprar: Math.floor(Math.random() * 1000),
+      tasaCambio: Math.random() * 20,
+      estatusNotificacion: ['Enviada', 'Rechazada', 'Por enviar'][i % 3],
+    }));
+
+    this.dataTable.destroy();
+    this.initializeDataTable();
+  }
+
+  toggleDropdown() {
+    this.dropdownOpen = !this.dropdownOpen;
+  }
+
+  exportar() {
+    console.log('Exportar');
+    // Lógica para exportar
+  }
+
+  cargar() {
+    console.log('Cargar');
+    // Lógica para cargar
+  }
+
+  anular() {
+    console.log('Anular');
+    // Lógica para anular
+  }
+
+  getEstatusClass(estatus: string): string {
+    switch (estatus) {
+      case 'Enviada':
+        return 'status-enviada';
+      case 'Rechazada':
+        return 'status-rechazada';
+      case 'Por enviar':
+        return 'status-por-enviar';
+      default:
+        return '';
+    }
   }
 }

@@ -1,6 +1,8 @@
 <nav class="page-breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a routerLink="/operaciones">Operaciones-Extranjera</a></li>
+    <li class="breadcrumb-item">
+      <a routerLink="/operaciones">Operaciones-Extranjera</a>
+    </li>
     <li class="breadcrumb-item active" aria-current="page">Menudeo</li>
   </ol>
 </nav>
@@ -9,46 +11,113 @@
   <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
-        <h6 class="card-title text-center">Formulario</h6>
         <form [formGroup]="menudeoForm" (ngSubmit)="onSubmit()">
           <div class="row">
             <div class="col-sm-3">
               <div class="mb-3">
                 <label for="cedula" class="form-label">Cedula</label>
-                <input type="text" formControlName="cedula" class="form-control" id="cedula" autocomplete="off" placeholder="Cedula">
-                <div *ngIf="f.cedula.touched && f.cedula.invalid" class="text-danger">
-                  <div *ngIf="f.cedula.errors?.required">La cédula es requerida.</div>
+                <input
+                  type="text"
+                  id="cedula"
+                  formControlName="cedula"
+                  class="form-control"
+                />
+                <div
+                  *ngIf="f.cedula.touched && f.cedula.invalid"
+                  class="text-danger"
+                >
+                  <div *ngIf="f.cedula.errors?.required">
+                    La cédula es requerida.
+                  </div>
                 </div>
               </div>
             </div>
             <div class="col-sm-3">
               <div class="mb-3">
                 <label for="fecha" class="form-label">Fecha</label>
-                <input type="text" formControlName="fecha" class="form-control" id="fecha" autocomplete="off" placeholder="Fecha">
-                <div *ngIf="f.fecha.touched && f.fecha.invalid" class="text-danger">
-                  <div *ngIf="f.fecha.errors?.required">La fecha es requerida.</div>
+                <div class="input-group">
+                  <input
+                    class="form-control"
+                    placeholder="yyyy-mm-dd"
+                    formControlName="fecha"
+                    ngbDatepicker
+                    #d="ngbDatepicker"
+                  />
+                  <button
+                    class="input-group-text"
+                    type="button"
+                    (click)="d.toggle()"
+                  >
+                    <i class="feather icon-calendar icon-md text-muted"></i>
+                  </button>
+                </div>
+                <div
+                  *ngIf="f.fecha.touched && f.fecha.invalid"
+                  class="text-danger"
+                >
+                  <div *ngIf="f.fecha.errors?.required">
+                    La fecha es requerida.
+                  </div>
                 </div>
               </div>
             </div>
             <div class="col-sm-3">
               <div class="mb-3">
-                <label class="form-label">Estatus</label>
-                <select formControlName="estatus" class="form-select mb-3">
+                <label for="estatus" class="form-label">Estatus</label>
+                <select
+                  id="estatus"
+                  formControlName="estatus"
+                  class="form-select"
+                >
                   <option value="1">Todas</option>
                   <option value="2">Enviadas</option>
                   <option value="3">Rechazadas</option>
                   <option value="4">Por enviar</option>
                 </select>
-                <div *ngIf="f.estatus.touched && f.estatus.invalid" class="text-danger">
-                  <div *ngIf="f.estatus.errors?.required">El estatus es requerido.</div>
+                <div
+                  *ngIf="f.estatus.touched && f.estatus.invalid"
+                  class="text-danger"
+                >
+                  <div *ngIf="f.estatus.errors?.required">
+                    El estatus es requerido.
+                  </div>
                 </div>
               </div>
             </div>
             <div class="col-sm-2 d-flex align-items-end">
               <button type="submit" class="btn btn-primary mb-3">Buscar</button>
-            </div>
-            <div class="col-sm-1 d-flex align-items-end justify-content-center">
-              <i data-feather="more-vertical" appFeatherIcon></i>
+              <div class="dropdown ms-2">
+                <button
+                  class="btn btn-link p-0 mb-3 dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  aria-expanded="false"
+                  (click)="toggleDropdown()"
+                >
+                  <i data-feather="more-vertical" appFeatherIcon></i>
+                </button>
+                <ul
+                  class="dropdown-menu"
+                  [class.show]="dropdownOpen"
+                  aria-labelledby="dropdownMenuButton"
+                >
+                  <li>
+                    <a class="dropdown-item" href="#" (click)="exportar()"
+                      >Exportar</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#" (click)="cargar()"
+                      >Cargar</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#" (click)="anular()"
+                      >Anular</a
+                    >
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </form>
@@ -57,7 +126,7 @@
   </div>
 </div>
 
-<div class="d-flex justify-content-center" *ngIf="operaciones.length > 0">
+<div class="d-flex justify-content-center">
   <div class="col-md-12 stretch-card">
     <div class="card">
       <div class="card-body">
@@ -81,17 +150,21 @@
                 <td>{{ oper.nombre }}</td>
                 <td>{{ oper.montoAComprar }}</td>
                 <td>{{ oper.tasaCambio }}</td>
-                <td>{{ oper.estatusNotificacion }}</td>
+                <td>
+                  <span [ngClass]="getEstatusClass(oper.estatusNotificacion)">
+                    {{ oper.estatusNotificacion }}
+                  </span>
+                </td>
               </tr>
             </tbody>
             <tfoot>
               <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
+                <th>Id</th>
+                <th>Cedula</th>
+                <th>Nombre</th>
+                <th>Monto</th>
+                <th>Tasa</th>
+                <th>Estatus</th>
               </tr>
             </tfoot>
           </table>

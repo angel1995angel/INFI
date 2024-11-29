@@ -6,7 +6,7 @@ import { MenudeoComponent } from './menudeo/menudeo.component';
 import { IntervencionComponent } from './intervencion/intervencion.component';
 import { MesaCambioComponent } from './mesa-cambio/mesa-cambio.component';
 import { OperacionesExtranjeraComponent } from './operaciones-extranjera.component';
-
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -14,12 +14,13 @@ import { OperacionesExtranjeraComponent } from './operaciones-extranjera.compone
     MenudeoComponent,
     IntervencionComponent,
     MesaCambioComponent,
-    OperacionesExtranjeraComponent
+    OperacionesExtranjeraComponent,
   ],
   imports: [
     CommonModule,
     OperacionesExtranjerasRoutingModule,
-    SharedModule
-  ]
+    SharedModule,
+    NgxPaginationModule,
+  ],
 })
-export class OperacionesExtranjeraModule { }
+export class OperacionesExtranjeraModule {}
