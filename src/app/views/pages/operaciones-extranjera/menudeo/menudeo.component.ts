@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as feather from 'feather-icons';
 import { DataTable } from 'simple-datatables';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-menudeo',
@@ -13,13 +14,18 @@ export class MenudeoComponent implements OnInit, AfterViewInit {
   operaciones: any[] = [];
   page = 1;
   dropdownOpen = false;
-  dataTable: DataTable;
+  dataTable: DataTable | undefined;
+  loading = false;
+  showTables = false; // Variable para controlar la visibilidad de las tablas
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private modalService: NgbModal
+  ) {}
 
   ngOnInit(): void {
     this.menudeoForm = this.formBuilder.group({
-      cedula: ['', Validators.required],
+      cedula: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       fecha: ['', Validators.required],
       estatus: ['', Validators.required],
     });
@@ -41,7 +47,9 @@ export class MenudeoComponent implements OnInit, AfterViewInit {
 
   initializeDataTable() {
     const table: any = document.querySelector('#dataTableExample');
-    this.dataTable = new DataTable(table);
+    if (table) {
+      this.dataTable = new DataTable(table);
+    }
   }
 
   get f() {
@@ -63,12 +71,32 @@ export class MenudeoComponent implements OnInit, AfterViewInit {
       estatusNotificacion: ['Enviada', 'Rechazada', 'Por enviar'][i % 3],
     }));
 
-    this.dataTable.destroy();
+    if (this.dataTable) {
+      this.dataTable.destroy();
+    }
     this.initializeDataTable();
+    this.showTables = true; // Mostrar las tablas después de la búsqueda
   }
 
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
+  }
+
+  openExportModal(content: any) {
+    this.modalService.open(content, { centered: true });
+  }
+
+  openUploadModal(content: any) {
+    this.modalService.open(content, { centered: true });
+  }
+
+  handleFileUpload(format: string, modal: any) {
+    console.log(`Cargando archivo en formato ${format}`);
+    modal.close();
+    this.loading = true;
+    setTimeout(() => {
+      this.loading = false;
+    }, 10000);
   }
 
   exportar() {

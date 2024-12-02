@@ -197,3 +197,20 @@
     }
   }
 }
+
+
+/* menudeo.component.scss */
+.spinner-border {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.spinner-border + strong {
+  font-size: 0.875rem;
+}
+
+
+.prueba{
+  margin-top: 29px;
+  /* Ajusta este valor según sea necesario */
+}

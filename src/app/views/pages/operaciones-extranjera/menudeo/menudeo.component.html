@@ -12,28 +12,33 @@
     <div class="card">
       <div class="card-body">
         <form [formGroup]="menudeoForm" (ngSubmit)="onSubmit()">
-          <div class="row">
+          <div class="row align-items-start">
             <div class="col-sm-3">
-              <div class="mb-3">
+              <div class="mb-3 position-relative">
                 <label for="cedula" class="form-label">Cedula</label>
                 <input
                   type="text"
                   id="cedula"
                   formControlName="cedula"
                   class="form-control"
+                  pattern="[0-9]*"
+                  inputmode="numeric"
                 />
                 <div
                   *ngIf="f.cedula.touched && f.cedula.invalid"
-                  class="text-danger"
+                  class="text-danger position-absolute"
                 >
                   <div *ngIf="f.cedula.errors?.required">
                     La cédula es requerida.
+                  </div>
+                  <div *ngIf="f.cedula.errors?.pattern">
+                    La cédula debe contener solo números.
                   </div>
                 </div>
               </div>
             </div>
             <div class="col-sm-3">
-              <div class="mb-3">
+              <div class="mb-3 position-relative">
                 <label for="fecha" class="form-label">Fecha</label>
                 <div class="input-group">
                   <input
@@ -42,6 +47,7 @@
                     formControlName="fecha"
                     ngbDatepicker
                     #d="ngbDatepicker"
+                    readonly
                   />
                   <button
                     class="input-group-text"
@@ -53,7 +59,7 @@
                 </div>
                 <div
                   *ngIf="f.fecha.touched && f.fecha.invalid"
-                  class="text-danger"
+                  class="text-danger position-absolute"
                 >
                   <div *ngIf="f.fecha.errors?.required">
                     La fecha es requerida.
@@ -62,7 +68,7 @@
               </div>
             </div>
             <div class="col-sm-3">
-              <div class="mb-3">
+              <div class="mb-3 position-relative">
                 <label for="estatus" class="form-label">Estatus</label>
                 <select
                   id="estatus"
@@ -76,7 +82,7 @@
                 </select>
                 <div
                   *ngIf="f.estatus.touched && f.estatus.invalid"
-                  class="text-danger"
+                  class="text-danger position-absolute"
                 >
                   <div *ngIf="f.estatus.errors?.required">
                     El estatus es requerido.
@@ -84,40 +90,24 @@
                 </div>
               </div>
             </div>
-            <div class="col-sm-2 d-flex align-items-end">
-              <button type="submit" class="btn btn-primary mb-3">Buscar</button>
-              <div class="dropdown ms-2">
+            <div class="col-sm-3 d-flex align-items-end">
+              <button type="submit" class="btn btn-primary mb-3 prueba">Buscar</button>
+              <div class="dropdown ms-2" ngbDropdown>
                 <button
                   class="btn btn-link p-0 mb-3 dropdown-toggle"
                   type="button"
                   id="dropdownMenuButton"
-                  aria-expanded="false"
-                  (click)="toggleDropdown()"
+                  ngbDropdownToggle
                 >
                   <i data-feather="more-vertical" appFeatherIcon></i>
                 </button>
-                <ul
-                  class="dropdown-menu"
-                  [class.show]="dropdownOpen"
-                  aria-labelledby="dropdownMenuButton"
-                >
-                  <li>
-                    <a class="dropdown-item" href="#" (click)="exportar()"
-                      >Exportar</a
-                    >
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="#" (click)="cargar()"
-                      >Cargar</a
-                    >
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="#" (click)="anular()"
-                      >Anular</a
-                    >
-                  </li>
-                </ul>
+                <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
+                  <button ngbDropdownItem (click)="openExportModal(exportModal)">Exportar</button>
+                  <button ngbDropdownItem (click)="openUploadModal(uploadModal)">Cargar</button>
+                  <button ngbDropdownItem class="disabled">Anular</button>
+                </div>
               </div>
+
             </div>
           </div>
         </form>
@@ -126,12 +116,26 @@
   </div>
 </div>
 
-<div class="d-flex justify-content-center">
+<div *ngIf="showTables" class="d-flex justify-content-center">
   <div class="col-md-12 stretch-card">
     <div class="card">
       <div class="card-body">
-        <h6 class="card-title text-center">Data Table</h6>
+        <div *ngIf="loading" class="ms-3 d-flex align-items-center">
+                <div class="spinner-border" role="status">
+                  <span class="visually-hidden">Cargando archivo...</span>
+                </div>
+                <strong class="ms-2">Cargando archivo...</strong>
+              </div>
         <div class="table-responsive">
+           <table class="table table-bordered mb-4">
+            <tbody>
+              <tr>
+                <td>Cantidad Operaciones: 1000</td>
+                <td>Monto Total: 10000 $</td>
+                <td>Proceso: Activo</td>
+              </tr>
+            </tbody>
+          </table>
           <table id="dataTableExample" class="table">
             <thead>
               <tr>
@@ -173,3 +177,46 @@
     </div>
   </div>
 </div>
+
+<!-- Export Modal -->
+<ng-template #exportModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Exportar</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="mb-3">
+        <label class="form-label" for="formFile">Cargar archivo</label>
+        <input class="form-control" type="file" id="formFile">
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cerrar</button>
+    <button type="button" class="btn btn-primary" (click)="modal.close('by: save button')">Guardar cambios</button>
+  </div>
+</ng-template>
+
+<!-- Upload Modal -->
+<ng-template #uploadModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Cargar</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="mb-3">
+        <label class="form-label">Seleccione el formato</label>
+        <div class="d-grid gap-2">
+          <button type="button" class="btn btn-outline-primary" (click)="handleFileUpload('csv', modal)">CSV</button>
+          <button type="button" class="btn btn-outline-primary" (click)="handleFileUpload('excel', modal)">Excel</button>
+          <button type="button" class="btn btn-outline-primary" (click)="handleFileUpload('pdf', modal)">PDF</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cerrar</button>
+  </div>
+</ng-template>
