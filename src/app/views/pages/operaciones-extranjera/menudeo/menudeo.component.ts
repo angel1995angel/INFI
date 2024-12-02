@@ -17,6 +17,7 @@ export class MenudeoComponent implements OnInit, AfterViewInit {
   dataTable: DataTable | undefined;
   loading = false;
   showTables = false; // Variable para controlar la visibilidad de las tablas
+  selectedOperacion: any = null; // Variable para almacenar la operación seleccionada
 
   constructor(
     private formBuilder: FormBuilder,
@@ -125,5 +126,11 @@ export class MenudeoComponent implements OnInit, AfterViewInit {
       default:
         return '';
     }
+  }
+
+  editOperacion(operacion: any) {
+    this.selectedOperacion = operacion;
+    // Aquí puedes abrir un modal o redirigir a una página de edición
+    console.log('Editar operación:', operacion);
   }
 }

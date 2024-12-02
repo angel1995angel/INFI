@@ -116,7 +116,7 @@
   </div>
 </div>
 
-<div *ngIf="showTables" class="d-flex justify-content-center">
+<div class="d-flex justify-content-center">
   <div class="col-md-12 stretch-card">
     <div class="card">
       <div class="card-body">
@@ -127,7 +127,7 @@
                 <strong class="ms-2">Cargando archivo...</strong>
               </div>
         <div class="table-responsive">
-           <table class="table table-bordered mb-4">
+          <table class="table table-bordered mb-4">
             <tbody>
               <tr>
                 <td>Cantidad Operaciones: 1000</td>
@@ -145,6 +145,7 @@
                 <th>Monto</th>
                 <th>Tasa</th>
                 <th>Estatus</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -158,6 +159,11 @@
                   <span [ngClass]="getEstatusClass(oper.estatusNotificacion)">
                     {{ oper.estatusNotificacion }}
                   </span>
+                </td>
+                  <td>
+                  <button class="btn btn-sm btn-primary" (click)="editOperacion(oper)">
+                    <i class="feather icon-edit"></i>
+                  </button>
                 </td>
               </tr>
             </tbody>
