@@ -8,7 +8,6 @@ import { MesaCambioComponent } from './mesa-cambio/mesa-cambio.component';
 import { OperacionesExtranjeraComponent } from './operaciones-extranjera.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 
-
 @NgModule({
   declarations: [
     MenudeoComponent,

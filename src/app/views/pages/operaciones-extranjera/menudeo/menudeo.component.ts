@@ -133,4 +133,20 @@ export class MenudeoComponent implements OnInit, AfterViewInit {
     // Aquí puedes abrir un modal o redirigir a una página de edición
     console.log('Editar operación:', operacion);
   }
+
+  closeModal(reason: string, modal: any) {
+    modal.close(reason);
+  }
+
+  closeExportModal(modal: any) {
+    this.closeModal('by: close button', modal);
+  }
+
+  saveExportModal(modal: any) {
+    this.closeModal('by: save button', modal);
+  }
+
+  closeUploadModal(modal: any) {
+    this.closeModal('by: close button', modal);
+  }
 }

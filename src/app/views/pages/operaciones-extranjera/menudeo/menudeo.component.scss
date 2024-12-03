@@ -213,3 +213,11 @@
   margin-top: 29px;
   /* Ajusta este valor según sea necesario */
 }
+
+.table-bordered tbody tr td {
+  flex: 1;
+  margin: 4px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}

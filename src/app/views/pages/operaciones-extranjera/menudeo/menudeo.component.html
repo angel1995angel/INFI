@@ -107,7 +107,6 @@
                   <button ngbDropdownItem class="disabled">Anular</button>
                 </div>
               </div>
-
             </div>
           </div>
         </form>
@@ -116,101 +115,42 @@
   </div>
 </div>
 
-<div class="d-flex justify-content-center">
-  <div class="col-md-12 stretch-card">
-    <div class="card">
-      <div class="card-body">
-        <div *ngIf="loading" class="ms-3 d-flex align-items-center">
-                <div class="spinner-border" role="status">
-                  <span class="visually-hidden">Cargando archivo...</span>
-                </div>
-                <strong class="ms-2">Cargando archivo...</strong>
-              </div>
-        <div class="table-responsive">
-          <table class="table table-bordered mb-4">
-            <tbody>
-              <tr>
-                <td>Cantidad Operaciones: 1000</td>
-                <td>Monto Total: 10000 $</td>
-                <td>Proceso: Activo</td>
-              </tr>
-            </tbody>
-          </table>
-          <table id="dataTableExample" class="table">
-            <thead>
-              <tr>
-                <th>Id</th>
-                <th>Cedula</th>
-                <th>Nombre</th>
-                <th>Monto</th>
-                <th>Tasa</th>
-                <th>Estatus</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let oper of operaciones">
-                <td>{{ oper.id }}</td>
-                <td>{{ oper.cedula }}</td>
-                <td>{{ oper.nombre }}</td>
-                <td>{{ oper.montoAComprar }}</td>
-                <td>{{ oper.tasaCambio }}</td>
-                <td>
-                  <span [ngClass]="getEstatusClass(oper.estatusNotificacion)">
-                    {{ oper.estatusNotificacion }}
-                  </span>
-                </td>
-                  <td>
-                  <button class="btn btn-sm btn-primary" (click)="editOperacion(oper)">
-                    <i class="feather icon-edit"></i>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr>
-                <th>Id</th>
-                <th>Cedula</th>
-                <th>Nombre</th>
-                <th>Monto</th>
-                <th>Tasa</th>
-                <th>Estatus</th>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<app-generic-table
+  [headers]="['Id', 'Cedula', 'Nombre', 'Monto', 'Tasa', 'Estatus', 'Acciones']"
+  [data]="operaciones"
+  [keys]="['id', 'cedula', 'nombre', 'montoAComprar', 'tasaCambio', 'estatusNotificacion']"
+  [actions]="[
+    { icon: 'feather icon-edit', class: 'btn btn-sm btn-primary', handler: editOperacion }
+  ]"
+  [loading]="loading">
+</app-generic-table>
 
 <!-- Export Modal -->
 <ng-template #exportModal let-modal>
-  <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Exportar</h5>
-    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
-  </div>
-  <div class="modal-body">
+  <app-generic-modal
+    [title]="'Exportar'"
+    [actions]="[
+      { label: 'Cerrar', class: 'btn-secondary', handler: closeExportModal.bind(this, modal) },
+      { label: 'Guardar cambios', class: 'btn-primary', handler: saveExportModal.bind(this, modal) }
+    ]"
+    (closeModal)="closeModal($event, modal)">
     <form>
       <div class="mb-3">
         <label class="form-label" for="formFile">Cargar archivo</label>
         <input class="form-control" type="file" id="formFile">
       </div>
     </form>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cerrar</button>
-    <button type="button" class="btn btn-primary" (click)="modal.close('by: save button')">Guardar cambios</button>
-  </div>
+  </app-generic-modal>
 </ng-template>
 
 <!-- Upload Modal -->
 <ng-template #uploadModal let-modal>
-  <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Cargar</h5>
-    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
-  </div>
-  <div class="modal-body">
+  <app-generic-modal
+    [title]="'Cargar'"
+    [actions]="[
+      { label: 'Cerrar', class: 'btn-secondary', handler: closeUploadModal.bind(this, modal) }
+    ]"
+    (closeModal)="closeModal($event, modal)">
     <form>
       <div class="mb-3">
         <label class="form-label">Seleccione el formato</label>
@@ -221,8 +161,5 @@
         </div>
       </div>
     </form>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cerrar</button>
-  </div>
+  </app-generic-modal>
 </ng-template>

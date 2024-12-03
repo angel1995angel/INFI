@@ -26,8 +26,8 @@ export const MENU: MenuItem[] = [
   },
   {
     label: 'Mesa de Cambio',
-    icon: 'home',
-    link: '/operaciones/mesa-cambio',
+    icon: '',
+    link: '/operaciones/mesa',
   },
   {
     label: 'Web Apps',
