@@ -11,22 +11,54 @@ export const MENU: MenuItem[] = [
     link: '/dashboard',
   },
   {
+    label: 'Configuración',
+    isTitle: true,
+  },
+  {
+    label: 'Parametros',
+    icon: 'settings',
+    link: '/dashboard',
+  },
+  {
     label: 'Intercambio',
     isTitle: true,
   },
   {
     label: 'Menudeo',
-    icon: 'home',
+    icon: 'aperture',
     link: '/operaciones/menudeo',
   },
   {
     label: 'Intervencion',
-    icon: 'home',
+    icon: 'airplay',
     link: '/operaciones/intervencion',
   },
   {
     label: 'Mesa de Cambio',
-    icon: '',
+    icon: 'archive',
+    link: '/operaciones/mesa',
+  },
+  {
+    label: 'Oficina Comercial',
+    isTitle: true,
+  },
+  {
+    label: 'Inventario',
+    icon: 'unlock',
+    link: '/operaciones/mesa',
+  },
+  {
+    label: 'Oficina',
+    icon: 'briefcase',
+    link: '/operaciones/mesa',
+  },
+  {
+    label: 'Utilidades',
+    isTitle: true,
+  },
+  {
+    label: 'Procesos operativos',
+    icon: 'terminal',
     link: '/operaciones/mesa',
   },
   {

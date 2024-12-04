@@ -19,6 +19,46 @@ export class MesaCambioComponent implements OnInit, AfterViewInit {
   showTables = false; // Variable para controlar la visibilidad de las tablas
   selectedOperacion: any = null; // Variable para almacenar la operación seleccionada
 
+  fields: any[] = [
+    {
+      name: 'cedula',
+      label: 'Cedula',
+      type: 'text',
+      placeholder: 'Ingrese la cédula',
+      validations: [{ validator: Validators.required }],
+    },
+    {
+      name: 'moneda',
+      label: 'Tipo pacto',
+      type: 'select',
+      options: [
+        { value: 'OCAOCA', label: 'OCAOCA' },
+        { value: 'OCACLI', label: 'OCACLI' },
+        { value: 'CLIOCA', label: 'CLIOCA' },
+      ],
+      validations: [{ validator: Validators.required }],
+    },
+    {
+      name: 'fecha',
+      label: 'Fecha',
+      type: 'date',
+      placeholder: 'yyyy-mm-dd',
+      validations: [{ validator: Validators.required }],
+    },
+    {
+      name: 'estatus',
+      label: 'Estatus',
+      type: 'select',
+      options: [
+        { value: '1', label: 'Todas' },
+        { value: '2', label: 'Enviadas' },
+        { value: '3', label: 'Rechazadas' },
+        { value: '4', label: 'Por enviar' },
+      ],
+      validations: [{ validator: Validators.required }],
+    },
+  ];
+
   constructor(
     private formBuilder: FormBuilder,
     private modalService: NgbModal
@@ -27,8 +67,8 @@ export class MesaCambioComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.mesaCambioForm = this.formBuilder.group({
       cedula: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-      fecha: ['', Validators.required],
       moneda: ['', Validators.required],
+      fecha: ['', Validators.required],
       estatus: ['', Validators.required],
     });
 
@@ -58,7 +98,7 @@ export class MesaCambioComponent implements OnInit, AfterViewInit {
     return this.mesaCambioForm.controls;
   }
 
-  onSubmit() {
+  onSubmit(formValue: any) {
     if (this.mesaCambioForm.invalid) {
       this.mesaCambioForm.markAllAsTouched();
       return;

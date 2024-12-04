@@ -4,7 +4,7 @@ import { DesignModule } from './design/design.module';
 import { GenericTableComponent } from './components/generic-table/generic-table.component';
 import { GenericModalComponent } from './components/generic-modal/generic-modal.component';
 import { GenericFormComponent } from './components/generic-form/generic-form.component';
-
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -13,7 +13,7 @@ import { GenericFormComponent } from './components/generic-form/generic-form.com
     GenericModalComponent,
     GenericFormComponent,
   ],
-  imports: [CommonModule, DesignModule],
+  imports: [CommonModule, DesignModule, ReactiveFormsModule],
   exports: [
     DesignModule,
     GenericTableComponent,

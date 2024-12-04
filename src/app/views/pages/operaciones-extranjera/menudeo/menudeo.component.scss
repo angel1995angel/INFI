@@ -1,49 +1,4 @@
-.pagination {
-  display: flex;
-  justify-content: center;
-  padding: 1rem 0;
 
-  ::ng-deep .ngx-pagination {
-    display: flex;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-
-    li {
-      margin: 0 0.25rem;
-
-      a {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0.5rem 1rem;
-        border-radius: 0.25rem;
-        background-color: #f8f9fa;
-        color: #007bff;
-        text-decoration: none;
-        transition: background-color 0.3s, color 0.3s;
-
-        &:hover {
-          background-color: #007bff;
-          color: #fff;
-        }
-
-        &.current {
-          background-color: #007bff;
-          color: #fff;
-        }
-      }
-
-      &.disabled a {
-        background-color: #e9ecef;
-        color: #6c757d;
-        pointer-events: none;
-      }
-    }
-  }
-}
-
-/* menudeo.component.scss */
 .dropdown-toggle::after {
   display: none;
 }
@@ -56,7 +11,6 @@
 .dropdown-toggle {
   cursor: pointer;
   margin-top: -35px;
-  /* Ajusta este valor según sea necesario */
 }
 
 .dropdown-menu {
@@ -92,113 +46,7 @@
   color: inherit;
   text-decoration: none;
 }
-/* menudeo.component.scss */
-.table {
-  border-collapse: separate;
-  border-spacing: 0 15px;
-  width: 100%;
-  margin-bottom: 1rem;
-  color: #212529;
-}
 
-.table thead th {
-
-  border: none;
-  padding: 12px 15px;
-  text-align: center;
-  font-weight: bold;
-}
-
-.table tbody tr {
-  background-color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.table tbody tr:hover {
-  background-color: #f1f1f1;
-}
-
-.table tbody td {
-  border: none;
-  padding: 12px 15px;
-  text-align: center;
-}
-
-.table tfoot th {
-  border: none;
-}
-
-.status-enviada,
-.status-rechazada,
-.status-por-enviar {
-  color: white;
-  padding: 5px 10px;
-  border-radius: 5px;
-  display: inline-block;
-  width: 100px;
-  /* Ajusta este valor según sea necesario */
-  text-align: center;
-}
-
-.status-enviada {
-  background-color: green;
-}
-
-.status-rechazada {
-  background-color: red;
-}
-
-.status-por-enviar {
-  background-color: orange;
-}
-
-.pagination {
-  display: flex;
-  justify-content: center;
-  padding: 1rem 0;
-
-  ::ng-deep .ngx-pagination {
-    display: flex;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-
-    li {
-      margin: 0 0.25rem;
-
-      a {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0.5rem 1rem;
-        border-radius: 0.25rem;
-        background-color: #f8f9fa;
-        color: #007bff;
-        text-decoration: none;
-        transition: background-color 0.3s, color 0.3s;
-
-        &:hover {
-          background-color: #007bff;
-          color: #fff;
-        }
-
-        &.current {
-          background-color: #007bff;
-          color: #fff;
-        }
-      }
-
-      &.disabled a {
-        background-color: #e9ecef;
-        color: #6c757d;
-        pointer-events: none;
-      }
-    }
-  }
-}
-
-
-/* menudeo.component.scss */
 .spinner-border {
   width: 1.5rem;
   height: 1.5rem;
@@ -209,9 +57,9 @@
 }
 
 
-.prueba{
+.padingindividual{
   margin-top: 29px;
-  /* Ajusta este valor según sea necesario */
+
 }
 
 .table-bordered tbody tr td {

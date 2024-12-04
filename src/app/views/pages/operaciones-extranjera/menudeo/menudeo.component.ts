@@ -19,6 +19,35 @@ export class MenudeoComponent implements OnInit, AfterViewInit {
   showTables = false; // Variable para controlar la visibilidad de las tablas
   selectedOperacion: any = null; // Variable para almacenar la operación seleccionada
 
+  fields: any[] = [
+    {
+      name: 'cedula',
+      label: 'Cedula',
+      type: 'text',
+      placeholder: 'Ingrese la cédula',
+      validations: [{ validator: Validators.required }],
+    },
+    {
+      name: 'fecha',
+      label: 'Fecha',
+      type: 'date',
+      placeholder: 'yyyy-mm-dd',
+      validations: [{ validator: Validators.required }],
+    },
+    {
+      name: 'estatus',
+      label: 'Estatus',
+      type: 'select',
+      options: [
+        { value: '1', label: 'Todas' },
+        { value: '2', label: 'Enviadas' },
+        { value: '3', label: 'Rechazadas' },
+        { value: '4', label: 'Por enviar' },
+      ],
+      validations: [{ validator: Validators.required }],
+    },
+  ];
+
   constructor(
     private formBuilder: FormBuilder,
     private modalService: NgbModal
@@ -57,7 +86,7 @@ export class MenudeoComponent implements OnInit, AfterViewInit {
     return this.menudeoForm.controls;
   }
 
-  onSubmit() {
+  onSubmit(formValue: any) {
     if (this.menudeoForm.invalid) {
       this.menudeoForm.markAllAsTouched();
       return;

@@ -11,105 +11,29 @@
   <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
-        <form [formGroup]="menudeoForm" (ngSubmit)="onSubmit()">
-          <div class="row align-items-start">
-            <div class="col-sm-3">
-              <div class="mb-3 position-relative">
-                <label for="cedula" class="form-label">Cedula</label>
-                <input
-                  type="text"
-                  id="cedula"
-                  formControlName="cedula"
-                  class="form-control"
-                  pattern="[0-9]*"
-                  inputmode="numeric"
-                />
-                <div
-                  *ngIf="f.cedula.touched && f.cedula.invalid"
-                  class="text-danger position-absolute"
-                >
-                  <div *ngIf="f.cedula.errors?.required">
-                    La cédula es requerida.
-                  </div>
-                  <div *ngIf="f.cedula.errors?.pattern">
-                    La cédula debe contener solo números.
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-3">
-              <div class="mb-3 position-relative">
-                <label for="fecha" class="form-label">Fecha</label>
-                <div class="input-group">
-                  <input
-                    class="form-control"
-                    placeholder="yyyy-mm-dd"
-                    formControlName="fecha"
-                    ngbDatepicker
-                    #d="ngbDatepicker"
-                    readonly
-                  />
-                  <button
-                    class="input-group-text"
-                    type="button"
-                    (click)="d.toggle()"
-                  >
-                    <i class="feather icon-calendar icon-md text-muted"></i>
-                  </button>
-                </div>
-                <div
-                  *ngIf="f.fecha.touched && f.fecha.invalid"
-                  class="text-danger position-absolute"
-                >
-                  <div *ngIf="f.fecha.errors?.required">
-                    La fecha es requerida.
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-3">
-              <div class="mb-3 position-relative">
-                <label for="estatus" class="form-label">Estatus</label>
-                <select
-                  id="estatus"
-                  formControlName="estatus"
-                  class="form-select"
-                >
-                  <option value="1">Todas</option>
-                  <option value="2">Enviadas</option>
-                  <option value="3">Rechazadas</option>
-                  <option value="4">Por enviar</option>
-                </select>
-                <div
-                  *ngIf="f.estatus.touched && f.estatus.invalid"
-                  class="text-danger position-absolute"
-                >
-                  <div *ngIf="f.estatus.errors?.required">
-                    El estatus es requerido.
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-3 d-flex align-items-end">
-              <button type="submit" class="btn btn-primary mb-3 prueba">Buscar</button>
-              <div class="dropdown ms-2" ngbDropdown>
-                <button
-                  class="btn btn-link p-0 mb-3 dropdown-toggle"
-                  type="button"
-                  id="dropdownMenuButton"
-                  ngbDropdownToggle
-                >
-                  <i data-feather="more-vertical" appFeatherIcon></i>
-                </button>
-                <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
-                  <button ngbDropdownItem (click)="openExportModal(exportModal)">Exportar</button>
-                  <button ngbDropdownItem (click)="openUploadModal(uploadModal)">Cargar</button>
-                  <button ngbDropdownItem class="disabled">Anular</button>
-                </div>
+        <app-generic-form
+          [fields]="fields"
+          submitLabel="Buscar"
+          (formSubmit)="onSubmit($event)">
+          <div class="col-sm-3 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary mb-3 padingindividual">Buscar</button>
+            <div class="dropdown ms-2" ngbDropdown>
+              <button
+                class="btn btn-link p-0 mb-3 dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                ngbDropdownToggle
+              >
+                <i data-feather="more-vertical" appFeatherIcon></i>
+              </button>
+              <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
+                <button ngbDropdownItem (click)="openUploadModal(uploadModal)">Exportar</button>
+                <button ngbDropdownItem (click)="openExportModal(exportModal)">Cargar</button>
+                <button ngbDropdownItem class="disabled">Anular</button>
               </div>
             </div>
           </div>
-        </form>
+        </app-generic-form>
       </div>
     </div>
   </div>
