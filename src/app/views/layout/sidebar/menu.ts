@@ -17,7 +17,7 @@ export const MENU: MenuItem[] = [
   {
     label: 'Parametros',
     icon: 'settings',
-    link: '/dashboard',
+    link: 'configuracion/parametros',
   },
   {
     label: 'Intercambio',
@@ -45,12 +45,12 @@ export const MENU: MenuItem[] = [
   {
     label: 'Inventario',
     icon: 'unlock',
-    link: '/operaciones/mesa',
+    link: '/comercial/inventario',
   },
   {
     label: 'Oficina',
     icon: 'briefcase',
-    link: '/operaciones/mesa',
+    link: '/comercial/oficina',
   },
   {
     label: 'Utilidades',
@@ -59,7 +59,7 @@ export const MENU: MenuItem[] = [
   {
     label: 'Procesos operativos',
     icon: 'terminal',
-    link: '/operaciones/mesa',
+    link: '/utilidad/procesos-operativo',
   },
   {
     label: 'Web Apps',

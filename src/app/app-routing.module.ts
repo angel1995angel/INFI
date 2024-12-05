@@ -6,7 +6,11 @@ import { ErrorPageComponent } from './views/pages/error-page/error-page.componen
 
 
 const routes: Routes = [
-  { path:'auth', loadChildren: () => import('./views/pages/auth/auth.module').then(m => m.AuthModule) },
+  {
+    path: 'auth',
+    loadChildren: () =>
+      import('./views/pages/auth/auth.module').then((m) => m.AuthModule),
+  },
   {
     path: '',
     component: BaseComponent,
@@ -14,66 +18,116 @@ const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        loadChildren: () => import('./views/pages/dashboard/dashboard.module').then(m => m.DashboardModule)
+        loadChildren: () =>
+          import('./views/pages/dashboard/dashboard.module').then(
+            (m) => m.DashboardModule
+          ),
+      },
+      {
+        path: 'configuracion',
+        loadChildren: () =>
+          import('./views/pages/configuracion/configuracion.module').then(
+            (m) => m.ConfiguracionModule
+          ),
       },
       {
         path: 'operaciones',
-        loadChildren: () => import('./views/pages/operaciones-extranjera/operaciones-extranjera.module').then(m => m.OperacionesExtranjeraModule)
+        loadChildren: () =>
+          import(
+            './views/pages/operaciones-extranjera/operaciones-extranjera.module'
+          ).then((m) => m.OperacionesExtranjeraModule),
+      },
+      {
+        path: 'comercial',
+        loadChildren: () =>
+          import(
+            './views/pages/comercial/comercial.module'
+          ).then((m) => m.ComercialModule),
+      },
+      {
+        path: 'utilidad',
+        loadChildren: () =>
+          import('./views/pages/utilidad/utilidad.module').then(
+            (m) => m.UtilidadModule
+          ),
       },
       {
         path: 'apps',
-        loadChildren: () => import('./views/pages/apps/apps.module').then(m => m.AppsModule)
+        loadChildren: () =>
+          import('./views/pages/apps/apps.module').then((m) => m.AppsModule),
       },
       {
         path: 'ui-components',
-        loadChildren: () => import('./views/pages/ui-components/ui-components.module').then(m => m.UiComponentsModule)
+        loadChildren: () =>
+          import('./views/pages/ui-components/ui-components.module').then(
+            (m) => m.UiComponentsModule
+          ),
       },
       {
         path: 'advanced-ui',
-        loadChildren: () => import('./views/pages/advanced-ui/advanced-ui.module').then(m => m.AdvancedUiModule)
+        loadChildren: () =>
+          import('./views/pages/advanced-ui/advanced-ui.module').then(
+            (m) => m.AdvancedUiModule
+          ),
       },
       {
         path: 'form-elements',
-        loadChildren: () => import('./views/pages/form-elements/form-elements.module').then(m => m.FormElementsModule)
+        loadChildren: () =>
+          import('./views/pages/form-elements/form-elements.module').then(
+            (m) => m.FormElementsModule
+          ),
       },
       {
         path: 'advanced-form-elements',
-        loadChildren: () => import('./views/pages/advanced-form-elements/advanced-form-elements.module').then(m => m.AdvancedFormElementsModule)
+        loadChildren: () =>
+          import(
+            './views/pages/advanced-form-elements/advanced-form-elements.module'
+          ).then((m) => m.AdvancedFormElementsModule),
       },
       {
         path: 'charts-graphs',
-        loadChildren: () => import('./views/pages/charts-graphs/charts-graphs.module').then(m => m.ChartsGraphsModule)
+        loadChildren: () =>
+          import('./views/pages/charts-graphs/charts-graphs.module').then(
+            (m) => m.ChartsGraphsModule
+          ),
       },
       {
         path: 'tables',
-        loadChildren: () => import('./views/pages/tables/tables.module').then(m => m.TablesModule)
+        loadChildren: () =>
+          import('./views/pages/tables/tables.module').then(
+            (m) => m.TablesModule
+          ),
       },
       {
         path: 'icons',
-        loadChildren: () => import('./views/pages/icons/icons.module').then(m => m.IconsModule)
+        loadChildren: () =>
+          import('./views/pages/icons/icons.module').then((m) => m.IconsModule),
       },
       {
         path: 'general',
-        loadChildren: () => import('./views/pages/general/general.module').then(m => m.GeneralModule)
+        loadChildren: () =>
+          import('./views/pages/general/general.module').then(
+            (m) => m.GeneralModule
+          ),
       },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       // { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
-    ]
+    ],
   },
   {
     path: 'error',
     component: ErrorPageComponent,
     data: {
-      'type': 404,
-      'title': 'Page Not Found',
-      'desc': 'Oopps!! The page you were looking for doesn\'t exist.'
-    }
+      type: 404,
+      title: 'Page Not Found',
+      desc: "Oopps!! The page you were looking for doesn't exist.",
+    },
   },
   {
     path: 'error/:type',
-    component: ErrorPageComponent
+    component: ErrorPageComponent,
   },
-  { path: '**', redirectTo: 'error', pathMatch: 'full' }
+  { path: '**', redirectTo: 'error', pathMatch: 'full' },
 ];
 
 @NgModule({

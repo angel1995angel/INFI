@@ -1,0 +1,89 @@
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a routerLink="/operaciones">Operaciones-Extranjera</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Inventario</li>
+  </ol>
+</nav>
+
+<div class="d-flex justify-content-center">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <app-generic-form
+          [fields]="fields"
+          submitLabel="Buscar"
+          (formSubmit)="onSubmit($event)">
+          <div class="col-sm-3 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary mb-3 padingindividual">Buscar</button>
+            <div class="dropdown ms-2" ngbDropdown>
+              <button
+                class="btn btn-link p-0 mb-3 dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                ngbDropdownToggle
+              >
+                <i data-feather="more-vertical" appFeatherIcon></i>
+              </button>
+              <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
+                <button ngbDropdownItem (click)="openUploadModal(uploadModal)">Exportar</button>
+                <button ngbDropdownItem (click)="openExportModal(exportModal)">Cargar</button>
+                <button ngbDropdownItem class="disabled">Anular</button>
+              </div>
+            </div>
+          </div>
+        </app-generic-form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-generic-table
+  [headers]="['Id', 'Cedula', 'Nombre', 'Monto', 'Tasa', 'Estatus', 'Acciones']"
+  [data]="operaciones"
+  [keys]="['id', 'cedula', 'nombre', 'montoAComprar', 'tasaCambio', 'estatusNotificacion']"
+  [actions]="[
+    { icon: 'feather icon-edit', class: 'btn btn-sm btn-primary', handler: editOperacion }
+  ]"
+  [loading]="loading">
+</app-generic-table>
+
+<!-- Export Modal -->
+<ng-template #exportModal let-modal>
+  <app-generic-modal
+    [title]="'Exportar'"
+    [actions]="[
+      { label: 'Cerrar', class: 'btn-secondary', handler: closeExportModal.bind(this, modal) },
+      { label: 'Guardar cambios', class: 'btn-primary', handler: saveExportModal.bind(this, modal) }
+    ]"
+    (closeModal)="closeModal(modal)">
+    <form>
+      <div class="mb-3">
+        <label class="form-label" for="formFile">Cargar archivo</label>
+        <input class="form-control" type="file" id="formFile">
+      </div>
+    </form>
+  </app-generic-modal>
+</ng-template>
+
+<!-- Upload Modal -->
+<ng-template #uploadModal let-modal>
+  <app-generic-modal
+    [title]="'Cargar'"
+    [actions]="[
+      { label: 'Cerrar', class: 'btn-secondary', handler: closeUploadModal.bind(this, modal) }
+    ]"
+    (closeModal)="closeModal(modal)">
+    <form>
+      <div class="mb-3">
+        <label class="form-label">Seleccione el formato</label>
+        <div class="d-grid gap-2">
+          <button type="button" class="btn btn-outline-primary" (click)="handleFileUpload('csv', modal)">CSV</button>
+          <button type="button" class="btn btn-outline-primary" (click)="handleFileUpload('excel', modal)">Excel</button>
+          <button type="button" class="btn btn-outline-primary" (click)="handleFileUpload('pdf', modal)">PDF</button>
+        </div>
+      </div>
+    </form>
+  </app-generic-modal>
+</ng-template>

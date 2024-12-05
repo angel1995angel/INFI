@@ -1,0 +1,102 @@
+<div class="container-fluid">
+  <div class="row">
+    <!-- Lado Izquierdo: Productos -->
+    <div class="col-lg-4 chat-aside border-end-lg">
+      <div class="card">
+        <div class="card-body">
+          <div class="aside-header">
+            <form class="search-form" (submit)="buscarProductos()">
+              <div class="input-group">
+                <div class="input-group-text">
+                  <i class="feather icon-search icon-md cursor-pointer"></i>
+                </div>
+                <input type="text" class="form-control" placeholder="Buscar productos..." [(ngModel)]="searchText" name="searchText">
+                <button type="submit" class="btn btn-primary">Buscar</button>
+              </div>
+            </form>
+          </div>
+          <div class="aside-body">
+            <div class="list-group mt-3">
+              <button
+                *ngFor="let producto of filteredProductos"
+                class="list-group-item list-group-item-action"
+                [class.active]="producto === selectedProducto"
+                (click)="selectProducto(producto)">
+                {{ producto }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lado Derecho: Parámetros -->
+    <div class="col-lg-8 chat-content">
+      <div class="card">
+        <div class="card-body">
+          <div *ngIf="selectedProducto">
+            <h3>{{ selectedProducto }}</h3>
+            <button class="btn btn-success mb-3" (click)="openAgregarParametroModal(agregarParametroModal)">Agregar Parámetro</button>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Clave</th>
+                  <th>Valor</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let parametro of paginatedParametros">
+                  <td>
+                    <span *ngIf="!parametro.editando">{{ parametro.clave }}</span>
+                    <input *ngIf="parametro.editando" [(ngModel)]="parametro.clave" class="form-control" />
+                  </td>
+                  <td>
+                    <span *ngIf="!parametro.editando">{{ parametro.valor }}</span>
+                    <input *ngIf="parametro.editando" [(ngModel)]="parametro.valor" class="form-control" />
+                  </td>
+                  <td>
+                    <button *ngIf="!parametro.editando" class="btn btn-primary btn-sm" (click)="modificarParametro(parametro)">
+                      Modificar
+                    </button>
+                    <button *ngIf="parametro.editando" class="btn btn-success btn-sm" (click)="guardarParametro(parametro)">
+                      Guardar
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="d-flex justify-content-center mt-3">
+              <button class="btn btn-secondary btn-sm me-2" (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
+              <button class="btn btn-secondary btn-sm" (click)="nextPage()" [disabled]="currentPage * itemsPerPage >= parametros.length">Siguiente</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para agregar parámetro -->
+<ng-template #agregarParametroModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Agregar Parámetro</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="mb-3">
+        <label for="clave" class="form-label">Clave</label>
+        <input type="text" class="form-control" id="clave" [(ngModel)]="nuevoParametro.clave" name="clave">
+      </div>
+      <div class="mb-3">
+        <label for="valor" class="form-label">Valor</label>
+        <input type="text" class="form-control" id="valor" [(ngModel)]="nuevoParametro.valor" name="valor">
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Cerrar</button>
+    <button type="button" class="btn btn-primary" (click)="agregarParametro(modal)">Agregar</button>
+  </div>
+</ng-template>

@@ -1,0 +1,59 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+.chat-wrapper {
+  height: 100%;
+}
+
+.card {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 100%;
+}
+
+.card-body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.row.position-relative {
+  flex: 1;
+  display: flex;
+}
+
+.chat-aside {
+  border-right: 1px solid #ddd;
+  background-color: white;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.chat-content {
+  padding-left: 20px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.list-group-item {
+  cursor: pointer;
+}
+
+.list-group-item.active {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: white;
+}
+
+.table {
+  margin-top: 20px;
+}
+
+.btn-sm {
+  padding: 5px 10px;
+}

@@ -1,0 +1,23 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 col-md-6 col-xl-4" *ngFor="let proceso of procesos">
+              <div class="card mb-4">
+                <div class="card-body">
+                  <h5 class="card-title">{{ proceso.nombre }}</h5>
+                  <p class="card-text">{{ proceso.descripcion }}</p>
+                  <button class="btn btn-primary" (click)="toggleActivo(proceso)">
+                    {{ proceso.activo ? 'Desactivar' : 'Activar' }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
