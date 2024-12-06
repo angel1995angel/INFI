@@ -40,9 +40,16 @@ const routes: Routes = [
       {
         path: 'comercial',
         loadChildren: () =>
-          import(
-            './views/pages/comercial/comercial.module'
-          ).then((m) => m.ComercialModule),
+          import('./views/pages/comercial/comercial.module').then(
+            (m) => m.ComercialModule
+          ),
+      },
+      {
+        path: 'canal',
+        loadChildren: () =>
+          import('./views/pages/canal/canal.module').then(
+            (m) => m.CanalModule
+          ),
       },
       {
         path: 'utilidad',

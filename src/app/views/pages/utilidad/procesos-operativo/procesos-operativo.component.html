@@ -12,6 +12,9 @@
                   <button class="btn btn-primary" (click)="toggleActivo(proceso)">
                     {{ proceso.activo ? 'Desactivar' : 'Activar' }}
                   </button>
+                  <button class="btn btn-secondary mt-2" (click)="openDetalleModal(proceso, detalleModal)">
+                    Detalle
+                  </button>
                 </div>
               </div>
             </div>
@@ -21,3 +24,48 @@
     </div>
   </div>
 </div>
+
+<!-- Modal para detalles del proceso -->
+<ng-template #detalleModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">{{ selectedProceso?.nombre }}</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <div class="mb-3">
+      <h6>Descripción</h6>
+      <p>{{ selectedProceso?.descripcion }}</p>
+    </div>
+    <div class="mb-3">
+      <h6>Frecuencia de Ejecución</h6>
+      <ul class="list-group mb-3">
+        <li class="list-group-item" *ngFor="let frecuencia of selectedProceso?.frecuencias; let i = index">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <span>{{ frecuencia.diaria ? 'Diariamente' : 'No Diariamente' }}</span>
+              <span>{{ frecuencia.hora }}:{{ frecuencia.minuto }}</span>
+            </div>
+            <button class="btn btn-danger btn-sm" (click)="eliminarFrecuencia(i)">Eliminar</button>
+          </div>
+        </li>
+      </ul>
+      <div class="input-group mb-3">
+        <select class="form-select" [(ngModel)]="nuevaFrecuencia.diaria">
+          <option [ngValue]="true">Diariamente</option>
+          <option [ngValue]="false">No Diariamente</option>
+        </select>
+        <select class="form-select" [(ngModel)]="nuevaFrecuencia.hora">
+          <option *ngFor="let h of [].constructor(24); let i = index" [ngValue]="('0' + i).slice(-2)">{{ ('0' + i).slice(-2) }}</option>
+        </select>
+        <select class="form-select" [(ngModel)]="nuevaFrecuencia.minuto">
+          <option *ngFor="let m of [].constructor(60); let i = index" [ngValue]="('0' + i).slice(-2)">{{ ('0' + i).slice(-2) }}</option>
+        </select>
+        <button class="btn btn-success" (click)="agregarFrecuencia()">Agregar</button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Cerrar</button>
+    <button type="button" class="btn btn-primary" (click)="guardarCambios(modal)">Guardar Cambios</button>
+  </div>
+</ng-template>

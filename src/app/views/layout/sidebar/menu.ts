@@ -53,6 +53,20 @@ export const MENU: MenuItem[] = [
     link: '/comercial/oficina',
   },
   {
+    label: 'Canal',
+    isTitle: true,
+  },
+  {
+    label: 'Inventario',
+    icon: 'unlock',
+    link: '/canal/inventario',
+  },
+  {
+    label: 'Politica',
+    icon: 'briefcase',
+    link: '/canal/politica',
+  },
+  {
     label: 'Utilidades',
     isTitle: true,
   },

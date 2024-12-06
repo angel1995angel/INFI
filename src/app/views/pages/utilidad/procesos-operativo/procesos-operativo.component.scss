@@ -1,9 +1,3 @@
-html,
-body {
-  height: 100%;
-  margin: 0;
-}
-
 .container-fluid {
   padding: 20px;
 }
@@ -22,4 +16,33 @@ body {
 
 .btn-primary {
   margin-top: 10px;
+}
+
+.btn-secondary {
+  margin-top: 10px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.list-group-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.input-group {
+  margin-top: 10px;
+}
+
+.input-group .form-select {
+  margin-right: 10px;
 }
