@@ -11,6 +11,7 @@ export class ParametrosComponent implements OnInit {
   parametros: { clave: string; valor: string; editando?: boolean }[] = [];
   selectedProducto: string | null = null;
   searchText: string = '';
+  searchParametroText: string = '';
   currentPage: number = 1;
   itemsPerPage: number = 5;
   filteredProductos: string[] = [];
@@ -100,6 +101,22 @@ export class ParametrosComponent implements OnInit {
     this.filteredProductos = this.productos.filter((producto) =>
       producto.toLowerCase().includes(this.searchText.toLowerCase())
     );
+  }
+
+  buscarParametros(): void {
+    if (this.searchParametroText.trim() === '') {
+      this.selectProducto(this.selectedProducto!);
+    } else {
+      this.parametros = this.parametros.filter(
+        (parametro) =>
+          parametro.clave
+            .toLowerCase()
+            .includes(this.searchParametroText.toLowerCase()) ||
+          parametro.valor
+            .toLowerCase()
+            .includes(this.searchParametroText.toLowerCase())
+      );
+    }
   }
 
   get paginatedParametros(): {

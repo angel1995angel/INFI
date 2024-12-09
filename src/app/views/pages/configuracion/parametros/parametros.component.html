@@ -1,74 +1,96 @@
-<div class="container-fluid">
-  <div class="row">
-    <!-- Lado Izquierdo: Productos -->
-    <div class="col-lg-4 chat-aside border-end-lg">
-      <div class="card">
-        <div class="card-body">
-          <div class="aside-header">
-            <form class="search-form" (submit)="buscarProductos()">
-              <div class="input-group">
-                <div class="input-group-text">
-                  <i class="feather icon-search icon-md cursor-pointer"></i>
-                </div>
-                <input type="text" class="form-control" placeholder="Buscar productos..." [(ngModel)]="searchText" name="searchText">
-                <button type="submit" class="btn btn-primary">Buscar</button>
+<div class="row inbox-wrapper h-100">
+  <div class="col-lg-12">
+    <div class="card h-100">
+      <div class="card-body h-100">
+        <div class="row h-100">
+          <!-- Lado Izquierdo: Productos -->
+          <div class="col-lg-3 border-end-lg h-100">
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="order-first">
+                <h4>Productos</h4>
               </div>
-            </form>
-          </div>
-          <div class="aside-body">
-            <div class="list-group mt-3">
-              <button
-                *ngFor="let producto of filteredProductos"
-                class="list-group-item list-group-item-action"
-                [class.active]="producto === selectedProducto"
-                (click)="selectProducto(producto)">
-                {{ producto }}
-              </button>
+            </div>
+            <div class="d-grid my-3">
+              <form class="search-form" (submit)="buscarProductos()">
+                <div class="input-group">
+                  <div class="input-group-text">
+                    <i class="feather icon-search icon-md cursor-pointer" (click)="buscarProductos()"></i>
+                  </div>
+                  <input type="text" class="form-control" placeholder="Buscar productos..." [(ngModel)]="searchText" name="searchText">
+                </div>
+              </form>
+            </div>
+            <div class="email-aside-nav h-100 overflow-auto">
+              <ul class="nav flex-column">
+                <li class="nav-item" *ngFor="let producto of filteredProductos">
+                  <button class="nav-link d-flex align-items-center list-group-item list-group-item-action border-bottom" [class.active]="producto === selectedProducto" (click)="selectProducto(producto)">
+                    <i class="feather icon-tag me-2"></i>
+                    {{ producto }}
+                  </button>
+                </li>
+              </ul>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Lado Derecho: Parámetros -->
-    <div class="col-lg-8 chat-content">
-      <div class="card">
-        <div class="card-body">
-          <div *ngIf="selectedProducto">
-            <h3>{{ selectedProducto }}</h3>
-            <button class="btn btn-success mb-3" (click)="openAgregarParametroModal(agregarParametroModal)">Agregar Parámetro</button>
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>Clave</th>
-                  <th>Valor</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let parametro of paginatedParametros">
-                  <td>
-                    <span *ngIf="!parametro.editando">{{ parametro.clave }}</span>
-                    <input *ngIf="parametro.editando" [(ngModel)]="parametro.clave" class="form-control" />
-                  </td>
-                  <td>
-                    <span *ngIf="!parametro.editando">{{ parametro.valor }}</span>
-                    <input *ngIf="parametro.editando" [(ngModel)]="parametro.valor" class="form-control" />
-                  </td>
-                  <td>
-                    <button *ngIf="!parametro.editando" class="btn btn-primary btn-sm" (click)="modificarParametro(parametro)">
-                      Modificar
-                    </button>
-                    <button *ngIf="parametro.editando" class="btn btn-success btn-sm" (click)="guardarParametro(parametro)">
-                      Guardar
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="d-flex justify-content-center mt-3">
-              <button class="btn btn-secondary btn-sm me-2" (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
-              <button class="btn btn-secondary btn-sm" (click)="nextPage()" [disabled]="currentPage * itemsPerPage >= parametros.length">Siguiente</button>
+          <!-- Lado Derecho: Parámetros -->
+          <div class="col-lg-9 h-100">
+            <div class="d-flex align-items-center justify-content-between border-bottom py-3">
+              <div class="d-flex align-items-center">
+                <i class="feather icon-settings icon-xl me-2"></i>
+                <h4>{{ selectedProducto }}</h4>
+                <span class="text-muted ms-2">({{ parametros.length }} parámetros)</span>
+              </div>
+              <div class="input-group w-50">
+                <input type="text" class="form-control" placeholder="Buscar parámetros..." [(ngModel)]="searchParametroText" name="searchParametroText">
+                <button class="btn btn-light btn-icon" type="button" (click)="buscarParametros()"><i class="feather icon-search"></i></button>
+              </div>
+            </div>
+            <div class="flex-grow-1 overflow-auto">
+              <div class="table-responsive">
+                <table class="table table-bordered mb-4">
+                  <thead>
+                    <tr>
+                      <th>Clave</th>
+                      <th>Valor</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let parametro of paginatedParametros">
+                      <td>
+                        <span *ngIf="!parametro.editando">{{ parametro.clave }}</span>
+                        <input *ngIf="parametro.editando" [(ngModel)]="parametro.clave" class="form-control" />
+                      </td>
+                      <td>
+                        <span *ngIf="!parametro.editando">{{ parametro.valor }}</span>
+                        <input *ngIf="parametro.editando" [(ngModel)]="parametro.valor" class="form-control" />
+                      </td>
+                      <td>
+                        <button *ngIf="!parametro.editando" class="btn btn-primary btn-sm" (click)="modificarParametro(parametro)">
+                          Modificar
+                        </button>
+                        <button *ngIf="parametro.editando" class="btn btn-success btn-sm" (click)="guardarParametro(parametro)">
+                          Guardar
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th>Clave</th>
+                      <th>Valor</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <div>
+                <button class="btn btn-secondary btn-sm me-2" (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
+                <button class="btn btn-secondary btn-sm" (click)="nextPage()" [disabled]="currentPage * itemsPerPage >= parametros.length">Siguiente</button>
+              </div>
+              <button class="btn btn-success" (click)="openAgregarParametroModal(agregarParametroModal)">Agregar Parámetro</button>
             </div>
           </div>
         </div>
@@ -79,8 +101,8 @@
 
 <!-- Modal para agregar parámetro -->
 <ng-template #agregarParametroModal let-modal>
-  <div class="modal-header">
-    <h5 class="modal-title">Agregar Parámetro</h5>
+  <div class="modal-header bg-primary text-white">
+    <h5 class="modal-title">Agregar Parámetro a <span class="text-warning">{{ selectedProducto }}</span></h5>
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
   </div>
   <div class="modal-body">
