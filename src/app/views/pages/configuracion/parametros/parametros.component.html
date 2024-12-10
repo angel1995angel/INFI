@@ -1,99 +1,98 @@
-<div class="row inbox-wrapper h-100">
-  <div class="col-lg-12">
-    <div class="card h-100">
-      <div class="card-body h-100">
-        <div class="row h-100">
-          <!-- Lado Izquierdo: Productos -->
-          <div class="col-lg-3 border-end-lg h-100">
-            <div class="d-flex align-items-center justify-content-between">
-              <div class="order-first">
-                <h4>Productos</h4>
-              </div>
-            </div>
-            <div class="d-grid my-3">
-              <form class="search-form" (submit)="buscarProductos()">
-                <div class="input-group">
-                  <div class="input-group-text">
-                    <i class="feather icon-search icon-md cursor-pointer" (click)="buscarProductos()"></i>
-                  </div>
-                  <input type="text" class="form-control" placeholder="Buscar productos..." [(ngModel)]="searchText" name="searchText">
-                </div>
-              </form>
-            </div>
-            <div class="email-aside-nav h-100 overflow-auto">
-              <ul class="nav flex-column">
-                <li class="nav-item" *ngFor="let producto of filteredProductos">
-                  <button class="nav-link d-flex align-items-center list-group-item list-group-item-action border-bottom" [class.active]="producto === selectedProducto" (click)="selectProducto(producto)">
-                    <i class="feather icon-tag me-2"></i>
-                    {{ producto }}
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </div>
 
-          <!-- Lado Derecho: Parámetros -->
-          <div class="col-lg-9 h-100">
-            <div class="d-flex align-items-center justify-content-between border-bottom py-3">
-              <div class="d-flex align-items-center">
-                <i class="feather icon-settings icon-xl me-2"></i>
-                <h4>{{ selectedProducto }}</h4>
-                <span class="text-muted ms-2">({{ parametros.length }} parámetros)</span>
-              </div>
-              <div class="input-group w-50">
-                <input type="text" class="form-control" placeholder="Buscar parámetros..." [(ngModel)]="searchParametroText" name="searchParametroText">
-                <button class="btn btn-light btn-icon" type="button" (click)="buscarParametros()"><i class="feather icon-search"></i></button>
-              </div>
-            </div>
-            <div class="flex-grow-1 overflow-auto">
-              <div class="table-responsive">
-                <table class="table table-bordered mb-4">
-                  <thead>
-                    <tr>
-                      <th>Clave</th>
-                      <th>Valor</th>
-                      <th>Acciones</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let parametro of paginatedParametros">
-                      <td>
-                        <span *ngIf="!parametro.editando">{{ parametro.clave }}</span>
-                        <input *ngIf="parametro.editando" [(ngModel)]="parametro.clave" class="form-control" />
-                      </td>
-                      <td>
-                        <span *ngIf="!parametro.editando">{{ parametro.valor }}</span>
-                        <input *ngIf="parametro.editando" [(ngModel)]="parametro.valor" class="form-control" />
-                      </td>
-                      <td>
-                        <button *ngIf="!parametro.editando" class="btn btn-primary btn-sm" (click)="modificarParametro(parametro)">
-                          Modificar
-                        </button>
-                        <button *ngIf="parametro.editando" class="btn btn-success btn-sm" (click)="guardarParametro(parametro)">
-                          Guardar
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                  <tfoot>
-                    <tr>
-                      <th>Clave</th>
-                      <th>Valor</th>
-                      <th>Acciones</th>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-            </div>
-            <div class="d-flex justify-content-between align-items-center mt-3">
-              <div>
-                <button class="btn btn-secondary btn-sm me-2" (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
-                <button class="btn btn-secondary btn-sm" (click)="nextPage()" [disabled]="currentPage * itemsPerPage >= parametros.length">Siguiente</button>
-              </div>
-              <button class="btn btn-success" (click)="openAgregarParametroModal(agregarParametroModal)">Agregar Parámetro</button>
-            </div>
-          </div>
+<div class="container-fluid h-100">
+  <div class="row h-100">
+    <!-- Lado Izquierdo: Productos -->
+    <div class="col-lg-3 bg-white d-flex flex-column border-end-lg">
+      <div class="d-flex align-items-center justify-content-between p-3 border-bottom">
+        <div class="order-first">
+          <h3>Productos</h3>
         </div>
+      </div>
+      <div class="d-grid my-3 px-3">
+        <form class="search-form" (submit)="buscarProductos()">
+          <div class="input-group">
+            <div class="input-group-text">
+              <i class="feather icon-search icon-md cursor-pointer" (click)="buscarProductos()"></i>
+            </div>
+            <input type="text" class="form-control" placeholder="Buscar productos..." [(ngModel)]="searchText" name="searchText">
+          </div>
+        </form>
+      </div>
+      <div class="overflow-auto flex-grow-1">
+        <ul class="list-group">
+          <li class="list-group-item d-flex align-items-center" *ngFor="let producto of filteredProductos" [class.active]="producto === selectedProducto" (click)="selectProducto(producto)">
+            <i class="feather icon-tag me-2" [class.text-white]="producto === selectedProducto"></i>
+            {{ producto }}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Lado Derecho: Parámetros -->
+    <div class="col-lg-9 h-100 bg-white d-flex flex-column">
+      <div class="d-flex align-items-center justify-content-between p-3 border-bottom">
+        <div class="d-flex align-items-center">
+          <i class="feather icon-settings icon-xl me-2"></i>
+          <h4>{{ selectedProducto }}</h4>
+          <span class="text-muted ms-2">({{ parametros.length }} parámetros)</span>
+        </div>
+        <div class="input-group w-50">
+          <input type="text" class="form-control" placeholder="Buscar parámetros..." [(ngModel)]="searchParametroText" name="searchParametroText">
+          <button class="btn btn-light btn-icon" type="button" (click)="buscarParametros()"><i class="feather icon-search"></i></button>
+        </div>
+      </div>
+      <div class="flex-grow-1 overflow-auto p-3">
+        <div class="table-responsive">
+          <table class="table table-bordered mb-4">
+            <thead>
+              <tr>
+                <th>Clave</th>
+                <th>Valor</th>
+                <th>Descripción</th>
+                <th>Tipo</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let parametro of paginatedParametros">
+                <td>
+                  <span>{{ parametro.clave }}</span>
+                </td>
+                <td>
+                  <span *ngIf="!parametro.editando">{{ parametro.valor }}</span>
+                  <input *ngIf="parametro.editando && parametro.tipo !== 'Booleano'" [(ngModel)]="parametro.valor" [type]="getInputType(parametro.tipo)" class="form-control" />
+                  <input *ngIf="parametro.editando && parametro.tipo === 'Booleano'" [(ngModel)]="parametro.valor" type="checkbox" class="form-check-input" />
+                </td>
+                <td>
+                  <span *ngIf="!parametro.editando">{{ parametro.descripcion }}</span>
+                  <input *ngIf="parametro.editando" [(ngModel)]="parametro.descripcion" class="form-control" />
+                </td>
+                <td>
+                  <span *ngIf="!parametro.editando">{{ parametro.tipo }}</span>
+                  <select *ngIf="parametro.editando" [(ngModel)]="parametro.tipo" class="form-select">
+                    <option *ngFor="let tipo of tipos" [value]="tipo">{{ tipo }}</option>
+                  </select>
+                </td>
+                <td>
+                  <button *ngIf="!parametro.editando" class="btn btn-primary btn-sm" (click)="modificarParametro(parametro)">
+                    <i class="feather icon-edit"></i>
+                  </button>
+                  <button *ngIf="parametro.editando" class="btn btn-success btn-sm" (click)="guardarParametro(parametro)">
+                    <i class="feather icon-save"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+
+          </table>
+        </div>
+      </div>
+      <div class="d-flex justify-content-between align-items-center p-3 border-top">
+        <div>
+          <button class="btn btn-secondary btn-sm me-2" (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
+          <button class="btn btn-secondary btn-sm" (click)="nextPage()" [disabled]="currentPage * itemsPerPage >= parametros.length">Siguiente</button>
+        </div>
+        <button class="btn btn-success" (click)="openAgregarParametroModal(agregarParametroModal)">Agregar Parámetro</button>
       </div>
     </div>
   </div>
@@ -113,7 +112,18 @@
       </div>
       <div class="mb-3">
         <label for="valor" class="form-label">Valor</label>
-        <input type="text" class="form-control" id="valor" [(ngModel)]="nuevoParametro.valor" name="valor">
+        <input *ngIf="nuevoParametro.tipo !== 'Booleano'" type="text" class="form-control" id="valor" [(ngModel)]="nuevoParametro.valor" [type]="getInputType(nuevoParametro.tipo)" name="valor">
+        <input *ngIf="nuevoParametro.tipo === 'Booleano'" type="checkbox" class="form-check-input" id="valor" [(ngModel)]="nuevoParametro.valor" name="valor">
+      </div>
+      <div class="mb-3">
+        <label for="descripcion" class="form-label">Descripción</label>
+        <input type="text" class="form-control" id="descripcion" [(ngModel)]="nuevoParametro.descripcion" name="descripcion">
+      </div>
+      <div class="mb-3">
+        <label for="tipo" class="form-label">Tipo</label>
+        <select class="form-select" id="tipo" [(ngModel)]="nuevoParametro.tipo" name="tipo">
+          <option *ngFor="let tipo of tipos" [value]="tipo">{{ tipo }}</option>
+        </select>
       </div>
     </form>
   </div>

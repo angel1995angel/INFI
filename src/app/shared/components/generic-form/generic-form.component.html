@@ -1,6 +1,6 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="row align-items-start">
-    <div *ngFor="let field of fields" class="col-sm-2 mb-2 position-relative">
+    <div *ngFor="let field of fields" class="col-sm-3 mb-2 position-relative">
       <label [for]="field.name" class="form-label">{{ field.label }}</label>
       <div *ngIf="field.type !== 'select'" class="input-group">
         <input

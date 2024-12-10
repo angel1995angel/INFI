@@ -72,4 +72,6 @@ export class GenericFormComponent implements OnInit, OnChanges {
       this.formSubmit.emit(this.form.value);
     }
   }
+
+
 }
