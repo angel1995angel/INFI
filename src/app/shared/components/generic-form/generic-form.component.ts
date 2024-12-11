@@ -1,12 +1,4 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  OnInit,
-  OnChanges,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -19,59 +11,36 @@ import {
   templateUrl: './generic-form.component.html',
   styleUrls: ['./generic-form.component.scss'],
 })
-export class GenericFormComponent implements OnInit, OnChanges {
+export class GenericFormComponent implements OnInit {
   @Input() fields: any[] = [];
+  @Input() layout: any[] = []; // Nueva propiedad para definir el diseño
   @Input() submitLabel: string = 'Submit';
-  @Input() data: any = {}; // Datos del registro a editar
   @Output() formSubmit = new EventEmitter<any>();
-
   form: FormGroup;
+  showAdvancedFilters = false; // Variable para controlar la visibilidad de los filtros avanzados
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
-    this.form = this.fb.group({});
+    this.form = this.formBuilder.group({});
     this.fields.forEach((field) => {
-      const control = this.fb.control(
-        this.data[field.name] || '',
-        this.bindValidations(field.validations || [])
+      const control = this.formBuilder.control(
+        field.value || '',
+        field.validations.map((v: { validator: ValidatorFn }) => v.validator)
       );
       this.form.addControl(field.name, control);
     });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.data && !changes.data.firstChange) {
-      this.updateForm();
-    }
-  }
-
-  updateForm(): void {
-    this.fields.forEach((field) => {
-      if (this.form.controls[field.name]) {
-        this.form.controls[field.name].setValue(this.data[field.name] || '');
-      }
-    });
-  }
-
-  bindValidations(
-    validations: { validator: ValidatorFn }[]
-  ): ValidatorFn | null {
-    if (validations.length > 0) {
-      const validList: ValidatorFn[] = [];
-      validations.forEach((valid) => {
-        validList.push(valid.validator);
-      });
-      return Validators.compose(validList);
-    }
-    return null;
-  }
-
   onSubmit() {
     if (this.form.valid) {
       this.formSubmit.emit(this.form.value);
+    } else {
+      this.form.markAllAsTouched();
     }
   }
 
-
+  toggleAdvancedFilters() {
+    this.showAdvancedFilters = !this.showAdvancedFilters;
+  }
 }

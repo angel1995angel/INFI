@@ -26,6 +26,7 @@ export class MenudeoComponent implements OnInit, AfterViewInit {
       type: 'text',
       placeholder: 'Ingrese la cédula',
       validations: [{ validator: Validators.required }],
+      advanced: true, // Marcar como filtro avanzado
     },
     {
       name: 'fecha',
@@ -46,6 +47,12 @@ export class MenudeoComponent implements OnInit, AfterViewInit {
       ],
       validations: [{ validator: Validators.required }],
     },
+  ];
+
+  layout: any[] = [
+    'col-sm-3', // Cedula
+    'col-sm-2', // Fecha
+    'col-sm-3', // Estatus
   ];
 
   constructor(

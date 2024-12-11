@@ -13,27 +13,60 @@
       <div class="card-body">
         <app-generic-form
           [fields]="fields"
+          [layout]="layout"
           submitLabel="Buscar"
           (formSubmit)="onSubmit($event)">
-          <div class="col-sm-3 d-flex align-items-end">
-            <button type="submit" class="btn btn-primary mb-3 padingindividual">Buscar</button>
+
+        </app-generic-form>
+        <div class="col-sm-1">
+            <button type="submit" class="btn btn-primary mb-3">Buscar</button>
+          </div>
+        <div class="row align-items-end">
+
+          <div class="col-sm-1">
             <div class="dropdown ms-2" ngbDropdown>
               <button
-                class="btn btn-link p-0 mb-3 dropdown-toggle"
+                class="btn btn-link p-0 mb-3"
                 type="button"
                 id="dropdownMenuButton"
                 ngbDropdownToggle
               >
                 <i data-feather="more-vertical" appFeatherIcon></i>
               </button>
-              <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
-                <button ngbDropdownItem (click)="openUploadModal(uploadModal)">Exportar</button>
-                <button ngbDropdownItem (click)="openExportModal(exportModal)">Cargar</button>
-                <button ngbDropdownItem class="disabled">Anular</button>
+              <div ngbDropdownMenu class="px-0" aria-labelledby="dropdownMenuButton">
+                <div class="px-3 py-2 d-flex align-items-center justify-content-between border-bottom">
+                  <p>Opciones</p>
+                </div>
+                <div class="p-1">
+                  <button ngbDropdownItem class="dropdown-item d-flex align-items-center py-2" (click)="openUploadModal(uploadModal)">
+                    <div class="wd-30 ht-30 d-flex align-items-center justify-content-center bg-primary rounded-circle me-3">
+                      <i class="feather icon-download icon-sm text-white"></i>
+                    </div>
+                    <div class="flex-grow-1 me-2">
+                      <p>Exportar</p>
+                    </div>
+                  </button>
+                  <button ngbDropdownItem class="dropdown-item d-flex align-items-center py-2" (click)="openExportModal(exportModal)">
+                    <div class="wd-30 ht-30 d-flex align-items-center justify-content-center bg-primary rounded-circle me-3">
+                      <i class="feather icon-upload icon-sm text-white"></i>
+                    </div>
+                    <div class="flex-grow-1 me-2">
+                      <p>Cargar</p>
+                    </div>
+                  </button>
+                  <button ngbDropdownItem class="dropdown-item d-flex align-items-center py-2 disabled">
+                    <div class="wd-30 ht-30 d-flex align-items-center justify-content-center bg-primary rounded-circle me-3">
+                      <i class="feather icon-x-circle icon-sm text-white"></i>
+                    </div>
+                    <div class="flex-grow-1 me-2">
+                      <p>Anular</p>
+                    </div>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </app-generic-form>
+        </div>
       </div>
     </div>
   </div>
