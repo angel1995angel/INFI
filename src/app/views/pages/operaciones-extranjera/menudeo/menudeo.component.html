@@ -11,19 +11,16 @@
   <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
-        <app-generic-form
-          [fields]="fields"
-          [layout]="layout"
-          submitLabel="Buscar"
-          (formSubmit)="onSubmit($event)">
-
-        </app-generic-form>
-        <div class="col-sm-1">
-            <button type="submit" class="btn btn-primary mb-3">Buscar</button>
-          </div>
         <div class="row align-items-end">
-
-          <div class="col-sm-1">
+          <div class="col-sm-10">
+            <app-generic-form
+              [fields]="fields"
+              [layout]="layout"
+              submitLabel="Buscar"
+              (formSubmit)="onSubmit($event)">
+            </app-generic-form>
+          </div>
+          <div class="col-sm-2 d-flex align-items-end">
             <div class="dropdown ms-2" ngbDropdown>
               <button
                 class="btn btn-link p-0 mb-3"

@@ -44,11 +44,12 @@
         </div>
       </div>
     </div>
+    <div class="col-sm-2 d-flex align-items-end">
+      <button type="submit" class="btn btn-primary mb-3">{{ submitLabel }}</button>
+      <button type="button" class="btn btn-link mb-3 ms-2" (click)="toggleAdvancedFilters()" data-bs-toggle="tooltip" data-bs-placement="top" title="Búsqueda avanzada">
+        <i class="feather icon-sliders"></i>
+      </button>
+    </div>
     <ng-content></ng-content>
-  </div>
-  <div class="d-flex justify-content-end mt-3">
-    <button type="button" class="btn btn-link" (click)="toggleAdvancedFilters()">
-      <i class="feather icon-sliders"></i>
-    </button>
   </div>
 </form>
