@@ -15,7 +15,10 @@ export class GenericFormComponent implements OnInit {
   @Input() fields: any[] = [];
   @Input() layout: any[] = []; // Nueva propiedad para definir el diseño
   @Input() submitLabel: string = 'Submit';
+  @Input() showDropdown: boolean = false; // Nueva propiedad para mostrar u ocultar el dropdown
   @Output() formSubmit = new EventEmitter<any>();
+  @Output() exportClick = new EventEmitter<void>(); // Evento de salida para exportar
+  @Output() uploadClick = new EventEmitter<void>(); // Evento de salida para cargar
   form: FormGroup;
   showAdvancedFilters = false; // Variable para controlar la visibilidad de los filtros avanzados
 
@@ -23,9 +26,14 @@ export class GenericFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({});
+    this.initializeForm();
+  }
+
+  initializeForm(): void {
+    const today = new Date().toISOString().split('T')[0]; // Obtener la fecha actual en formato yyyy-mm-dd
     this.fields.forEach((field) => {
       const control = this.formBuilder.control(
-        field.value || '',
+        field.type === 'date' && !field.value ? today : field.value || '',
         field.validations.map((v: { validator: ValidatorFn }) => v.validator)
       );
       this.form.addControl(field.name, control);
@@ -42,5 +50,13 @@ export class GenericFormComponent implements OnInit {
 
   toggleAdvancedFilters() {
     this.showAdvancedFilters = !this.showAdvancedFilters;
+  }
+
+  onExportClick() {
+    this.exportClick.emit();
+  }
+
+  onUploadClick() {
+    this.uploadClick.emit();
   }
 }

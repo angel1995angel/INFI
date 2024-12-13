@@ -34,6 +34,7 @@ export class MenudeoComponent implements OnInit, AfterViewInit {
       type: 'date',
       placeholder: 'yyyy-mm-dd',
       validations: [{ validator: Validators.required }],
+      value: new Date().toISOString().split('T')[0], // Establecer la fecha actual como valor predeterminado
     },
     {
       name: 'estatus',
@@ -51,7 +52,7 @@ export class MenudeoComponent implements OnInit, AfterViewInit {
 
   layout: any[] = [
     'col-sm-3', // Cedula
-    'col-sm-2', // Fecha
+    'col-sm-3', // Fecha
     'col-sm-3', // Estatus
   ];
 
@@ -63,7 +64,7 @@ export class MenudeoComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.menudeoForm = this.formBuilder.group({
       cedula: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-      fecha: ['', Validators.required],
+      fecha: [new Date().toISOString().split('T')[0], Validators.required], // Establecer la fecha actual como valor predeterminado
       estatus: ['', Validators.required],
     });
 

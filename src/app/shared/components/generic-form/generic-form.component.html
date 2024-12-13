@@ -49,6 +49,47 @@
       <button type="button" class="btn btn-link mb-3 ms-2" (click)="toggleAdvancedFilters()" data-bs-toggle="tooltip" data-bs-placement="top" title="Búsqueda avanzada">
         <i class="feather icon-sliders"></i>
       </button>
+      <div *ngIf="showDropdown" class="dropdown ms-2" ngbDropdown>
+        <button
+          class="btn btn-link p-0 mb-3"
+          type="button"
+          id="dropdownMenuButton"
+          ngbDropdownToggle
+        >
+          <i data-feather="more-vertical" appFeatherIcon></i>
+        </button>
+        <div ngbDropdownMenu class="px-0" aria-labelledby="dropdownMenuButton">
+          <div class="px-3 py-2 d-flex align-items-center justify-content-between border-bottom">
+            <p>Opciones</p>
+          </div>
+          <div class="p-1">
+            <button ngbDropdownItem class="dropdown-item d-flex align-items-center py-2" (click)="onExportClick()">
+              <div class="wd-30 ht-30 d-flex align-items-center justify-content-center bg-primary rounded-circle me-3">
+                <i class="feather icon-download icon-sm text-white"></i>
+              </div>
+              <div class="flex-grow-1 me-2">
+                <p>Exportar</p>
+              </div>
+            </button>
+            <button ngbDropdownItem class="dropdown-item d-flex align-items-center py-2" (click)="onUploadClick()">
+              <div class="wd-30 ht-30 d-flex align-items-center justify-content-center bg-primary rounded-circle me-3">
+                <i class="feather icon-upload icon-sm text-white"></i>
+              </div>
+              <div class="flex-grow-1 me-2">
+                <p>Cargar</p>
+              </div>
+            </button>
+            <button ngbDropdownItem class="dropdown-item d-flex align-items-center py-2 disabled">
+              <div class="wd-30 ht-30 d-flex align-items-center justify-content-center bg-primary rounded-circle me-3">
+                <i class="feather icon-x-circle icon-sm text-white"></i>
+              </div>
+              <div class="flex-grow-1 me-2">
+                <p>Anular</p>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
     <ng-content></ng-content>
   </div>
